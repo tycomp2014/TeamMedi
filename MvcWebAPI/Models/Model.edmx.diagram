@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="91bbf46a5f014a9590444e5bda063a9c" Name="Diagram1">
+        <EntityTypeShape EntityType="mydbModel.Ambulance" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mydbModel.CallCentre" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="mydbModel.GP" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="mydbModel.Hospital" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mydbModel.Medication" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mydbModel.MedicationHistory" Width="1.5" PointX="8.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mydbModel.Patient" Width="1.5" PointX="6" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="mydbModel.PatientCall" Width="1.5" PointX="8.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mydbModel.ViewPatient" Width="1.5" PointX="6.25" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="mydbModel.FK_Ambulance_CallCentre" ManuallyRouted="false" />
+        <AssociationConnector Association="mydbModel.FK_Hospital_CallCentre" ManuallyRouted="false" />
+        <AssociationConnector Association="mydbModel.FK_Hospital_GP" ManuallyRouted="false" />
+        <AssociationConnector Association="mydbModel.FK_Patient_GP" ManuallyRouted="false" />
+        <AssociationConnector Association="mydbModel.FK_MedicationHistory_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="mydbModel.FK_PatientCalls_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="mydbModel.Patient_Medication" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
