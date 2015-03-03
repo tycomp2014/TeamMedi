@@ -19,8 +19,8 @@
       [ViewPatient].[Surname] AS [Surname], 
       [ViewPatient].[DOB] AS [DOB], 
       [ViewPatient].[Medication] AS [Medication], 
-      [ViewPatient].[MedicationInfo] AS [MedicationInfo], 
-      [ViewPatient].[Alergies] AS [Alergies]
+      [ViewPatient].[Alergies] AS [Alergies], 
+      [ViewPatient].[MedicationHistory] AS [MedicationHistory]
       FROM [dbo].[ViewPatient] AS [ViewPatient]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_Ambulance_CallCentre" Association="mydbModel.Store.FK_Ambulance_CallCentre">
@@ -156,16 +156,17 @@
       <PropertyRef Name="PatientID" />
       <PropertyRef Name="MedicationID" />
       <PropertyRef Name="GPID" />
+      <PropertyRef Name="MedicationHistory" />
     </Key>
     <Property Name="PatientID" Type="int" Nullable="false" />
     <Property Name="MedicationID" Type="int" Nullable="false" />
     <Property Name="GPID" Type="int" Nullable="false" />
-    <Property Name="Firstname" Type="nvarchar" Nullable="false" MaxLength="20" />
-    <Property Name="Surname" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Firstname" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="DOB" Type="date" Nullable="false" />
-    <Property Name="Medication" Type="nvarchar" Nullable="false" MaxLength="20" />
-    <Property Name="MedicationInfo" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Medication" Type="varchar" Nullable="false" MaxLength="20" />
     <Property Name="Alergies" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="MedicationHistory" Type="varchar" Nullable="false" MaxLength="100" />
   </EntityType>
   <Association Name="FK_Ambulance_CallCentre">
     <End Role="CallCentre" Type="mydbModel.Store.CallCentre" Multiplicity="1" />

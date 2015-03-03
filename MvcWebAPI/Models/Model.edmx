@@ -24,8 +24,8 @@
       [ViewPatient].[Surname] AS [Surname], 
       [ViewPatient].[DOB] AS [DOB], 
       [ViewPatient].[Medication] AS [Medication], 
-      [ViewPatient].[MedicationInfo] AS [MedicationInfo], 
-      [ViewPatient].[Alergies] AS [Alergies]
+      [ViewPatient].[Alergies] AS [Alergies], 
+      [ViewPatient].[MedicationHistory] AS [MedicationHistory]
       FROM [dbo].[ViewPatient] AS [ViewPatient]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Ambulance_CallCentre" Association="mydbModel.Store.FK_Ambulance_CallCentre">
@@ -166,17 +166,17 @@
             
             
             
-            
+            <PropertyRef Name="MedicationHistory" />
           </Key>
           <Property Name="PatientID" Type="int" Nullable="false" />
           <Property Name="MedicationID" Type="int" Nullable="false" />
           <Property Name="GPID" Type="int" Nullable="false" />
-          <Property Name="Firstname" Type="nvarchar" Nullable="false" MaxLength="20" />
-          <Property Name="Surname" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Firstname" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="DOB" Type="date" Nullable="false" />
-          <Property Name="Medication" Type="nvarchar" Nullable="false" MaxLength="20" />
-          <Property Name="MedicationInfo" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Medication" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="Alergies" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MedicationHistory" Type="varchar" Nullable="false" MaxLength="100" />
         </EntityType>
         <Association Name="FK_Ambulance_CallCentre">
           <End Role="CallCentre" Type="mydbModel.Store.CallCentre" Multiplicity="1" />
@@ -420,16 +420,17 @@
             <PropertyRef Name="PatientID" />
             <PropertyRef Name="MedicationID" />
             <PropertyRef Name="GPID" />
+            <PropertyRef Name="MedicationHistory" />
           </Key>
           <Property Name="PatientID" Type="Int32" Nullable="false" />
           <Property Name="MedicationID" Type="Int32" Nullable="false" />
           <Property Name="GPID" Type="Int32" Nullable="false" />
-          <Property Name="Firstname" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
-          <Property Name="Surname" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Firstname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Medication" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
-          <Property Name="MedicationInfo" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Medication" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Alergies" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="MedicationHistory" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Ambulance_CallCentre">
           <End Role="CallCentre" Type="mydbModel.CallCentre" Multiplicity="1" />
@@ -608,6 +609,7 @@
           <EntitySetMapping Name="ViewPatients">
             <EntityTypeMapping TypeName="mydbModel.ViewPatient">
               <MappingFragment StoreEntitySet="ViewPatient">
+                <ScalarProperty Name="MedicationHistory" ColumnName="MedicationHistory" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
                 <ScalarProperty Name="MedicationID" ColumnName="MedicationID" />
                 <ScalarProperty Name="GPID" ColumnName="GPID" />
@@ -615,7 +617,6 @@
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Medication" ColumnName="Medication" />
-                <ScalarProperty Name="MedicationInfo" ColumnName="MedicationInfo" />
                 <ScalarProperty Name="Alergies" ColumnName="Alergies" />
               </MappingFragment>
             </EntityTypeMapping>

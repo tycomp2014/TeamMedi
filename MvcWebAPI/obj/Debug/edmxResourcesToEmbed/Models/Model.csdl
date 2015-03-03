@@ -142,16 +142,17 @@
       <PropertyRef Name="PatientID" />
       <PropertyRef Name="MedicationID" />
       <PropertyRef Name="GPID" />
+      <PropertyRef Name="MedicationHistory" />
     </Key>
     <Property Name="PatientID" Type="Int32" Nullable="false" />
     <Property Name="MedicationID" Type="Int32" Nullable="false" />
     <Property Name="GPID" Type="Int32" Nullable="false" />
-    <Property Name="Firstname" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
-    <Property Name="Surname" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="Firstname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Medication" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
-    <Property Name="MedicationInfo" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Medication" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
     <Property Name="Alergies" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Type="String" Name="MedicationHistory" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_Ambulance_CallCentre">
     <End Role="CallCentre" Type="mydbModel.CallCentre" Multiplicity="1" />

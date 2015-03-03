@@ -96,6 +96,7 @@
     <EntitySetMapping Name="ViewPatients">
       <EntityTypeMapping TypeName="mydbModel.ViewPatient">
         <MappingFragment StoreEntitySet="ViewPatient">
+          <ScalarProperty Name="MedicationHistory" ColumnName="MedicationHistory" />
           <ScalarProperty Name="PatientID" ColumnName="PatientID" />
           <ScalarProperty Name="MedicationID" ColumnName="MedicationID" />
           <ScalarProperty Name="GPID" ColumnName="GPID" />
@@ -103,7 +104,6 @@
           <ScalarProperty Name="Surname" ColumnName="Surname" />
           <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="Medication" ColumnName="Medication" />
-          <ScalarProperty Name="MedicationInfo" ColumnName="MedicationInfo" />
           <ScalarProperty Name="Alergies" ColumnName="Alergies" />
         </MappingFragment>
       </EntityTypeMapping>
