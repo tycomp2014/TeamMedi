@@ -10,9 +10,7 @@
 namespace MvcWebAPI.Models
 {
     using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
     
     public partial class ViewPatient
     {
@@ -21,8 +19,6 @@ using System.ComponentModel.DataAnnotations;
         public int GPID { get; set; }
         public string Firstname { get; set; }
         public string Surname { get; set; }
-        [DataType(DataType.Date),
-        DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime DOB { get; set; }
         public string Medication { get; set; }
         public string Alergies { get; set; }

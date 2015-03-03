@@ -22,6 +22,8 @@ namespace MvcWebAPI.Models
         public string City { get; set; }
         public string Conty { get; set; }
         public string Country { get; set; }
+        public double lat { get; set; }
+        public double lon { get; set; }
     
         public virtual CallCentre CallCentre { get; set; }
         public virtual GP GP { get; set; }

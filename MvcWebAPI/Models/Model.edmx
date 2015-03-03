@@ -93,11 +93,13 @@
           <Property Name="HospitalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="GPID" Type="int" Nullable="false" />
           <Property Name="CallCentreID" Type="int" Nullable="false" />
-          <Property Name="HospitalName" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="Town" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="City" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="Conty" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="Country" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="HospitalName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Town" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="City" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Conty" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Country" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="lat" Type="float" Nullable="false" />
+          <Property Name="lon" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Medication">
           <Key>
@@ -274,6 +276,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="calcDistance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lat" Type="float" Mode="In" />
+          <Parameter Name="lon" Type="float" Mode="In" />
+          <Parameter Name="Kilometers" Type="float" Mode="In" />
+        </Function>
+        <Function Name="CallCentreProc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="E_PatientLat" Type="float" Mode="In" />
+          <Parameter Name="E_PatientLon" Type="float" Mode="In" />
+          <Parameter Name="E_AmbulanceLat" Type="float" Mode="In" />
+          <Parameter Name="E_AmbulanceLon" Type="float" Mode="In" />
+          <Parameter Name="E_AmbulanceID" Type="int" Mode="In" />
+          <Parameter Name="E_PatientID" Type="int" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -316,6 +331,19 @@
             <End Role="Medication" EntitySet="Medications" />
             <End Role="Patient" EntitySet="Patients" />
           </AssociationSet>
+          <FunctionImport Name="calcDistance">
+            <Parameter Name="lat" Mode="In" Type="Double" />
+            <Parameter Name="lon" Mode="In" Type="Double" />
+            <Parameter Name="Kilometers" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="CallCentreProc">
+            <Parameter Name="E_PatientLat" Mode="In" Type="Double" />
+            <Parameter Name="E_PatientLon" Mode="In" Type="Double" />
+            <Parameter Name="E_AmbulanceLat" Mode="In" Type="Double" />
+            <Parameter Name="E_AmbulanceLon" Mode="In" Type="Double" />
+            <Parameter Name="E_AmbulanceID" Mode="In" Type="Int32" />
+            <Parameter Name="E_PatientID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Ambulance">
           <Key>
@@ -354,13 +382,15 @@
           <Property Name="HospitalID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="GPID" Type="Int32" Nullable="false" />
           <Property Name="CallCentreID" Type="Int32" Nullable="false" />
-          <Property Name="HospitalName" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="Town" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="City" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="Conty" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="Country" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="HospitalName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Town" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Conty" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="CallCentre" Relationship="mydbModel.FK_Hospital_CallCentre" FromRole="Hospital" ToRole="CallCentre" />
           <NavigationProperty Name="GP" Relationship="mydbModel.FK_Hospital_GP" FromRole="Hospital" ToRole="GP" />
+          <Property Type="Double" Name="lat" Nullable="false" />
+          <Property Type="Double" Name="lon" Nullable="false" />
         </EntityType>
         <EntityType Name="Medication">
           <Key>
@@ -545,6 +575,8 @@
           <EntitySetMapping Name="Hospitals">
             <EntityTypeMapping TypeName="mydbModel.Hospital">
               <MappingFragment StoreEntitySet="Hospital">
+                <ScalarProperty Name="lon" ColumnName="lon" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
                 <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
                 <ScalarProperty Name="GPID" ColumnName="GPID" />
                 <ScalarProperty Name="CallCentreID" ColumnName="CallCentreID" />
@@ -629,6 +661,8 @@
               <ScalarProperty Name="PatientID" ColumnName="PatientID" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="calcDistance" FunctionName="mydbModel.Store.calcDistance" />
+          <FunctionImportMapping FunctionImportName="CallCentreProc" FunctionName="mydbModel.Store.CallCentreProc" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

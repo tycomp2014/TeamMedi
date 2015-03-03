@@ -32,6 +32,8 @@
     <EntitySetMapping Name="Hospitals">
       <EntityTypeMapping TypeName="mydbModel.Hospital">
         <MappingFragment StoreEntitySet="Hospital">
+          <ScalarProperty Name="lon" ColumnName="lon" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
           <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
           <ScalarProperty Name="GPID" ColumnName="GPID" />
           <ScalarProperty Name="CallCentreID" ColumnName="CallCentreID" />
@@ -116,5 +118,7 @@
         <ScalarProperty Name="PatientID" ColumnName="PatientID" />
       </EndProperty>
     </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="calcDistance" FunctionName="mydbModel.Store.calcDistance" />
+    <FunctionImportMapping FunctionImportName="CallCentreProc" FunctionName="mydbModel.Store.CallCentreProc" />
   </EntityContainerMapping>
 </Mapping>

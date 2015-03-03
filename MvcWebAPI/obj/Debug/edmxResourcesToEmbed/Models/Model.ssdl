@@ -88,11 +88,13 @@
     <Property Name="HospitalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="GPID" Type="int" Nullable="false" />
     <Property Name="CallCentreID" Type="int" Nullable="false" />
-    <Property Name="HospitalName" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="Town" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="City" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="Conty" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="Country" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="HospitalName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Town" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="City" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Conty" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Country" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="lat" Type="float" Nullable="false" />
+    <Property Name="lon" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="Medication">
     <Key>
@@ -264,4 +266,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="calcDistance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="lat" Type="float" Mode="In" />
+    <Parameter Name="lon" Type="float" Mode="In" />
+    <Parameter Name="Kilometers" Type="float" Mode="In" />
+  </Function>
+  <Function Name="CallCentreProc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="E_PatientLat" Type="float" Mode="In" />
+    <Parameter Name="E_PatientLon" Type="float" Mode="In" />
+    <Parameter Name="E_AmbulanceLat" Type="float" Mode="In" />
+    <Parameter Name="E_AmbulanceLon" Type="float" Mode="In" />
+    <Parameter Name="E_AmbulanceID" Type="int" Mode="In" />
+    <Parameter Name="E_PatientID" Type="int" Mode="In" />
+  </Function>
 </Schema>
