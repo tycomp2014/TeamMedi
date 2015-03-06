@@ -253,6 +253,6 @@ C:\Users\Craigg\Desktop\Folder\MvcWebAPI\MvcWebAPI\bin\ko\System.Spatial.resourc
 C:\Users\Craigg\Desktop\Folder\MvcWebAPI\MvcWebAPI\bin\ru\System.Spatial.resources.dll
 C:\Users\Craigg\Desktop\Folder\MvcWebAPI\MvcWebAPI\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\Craigg\Desktop\Folder\MvcWebAPI\MvcWebAPI\bin\zh-Hant\System.Spatial.resources.dll
-C:\Users\Craigg\Desktop\Folder\MvcWebAPI\MvcWebAPI\obj\Debug\MvcWebAPI.csprojResolveAssemblyReference.cache
 C:\Users\Craigg\Desktop\Folder\MvcWebAPI\MvcWebAPI\obj\Debug\MvcWebAPI.dll
 C:\Users\Craigg\Desktop\Folder\MvcWebAPI\MvcWebAPI\obj\Debug\MvcWebAPI.pdb
+C:\Users\Craigg\Desktop\Folder\MvcWebAPI\MvcWebAPI\obj\Debug\MvcWebAPI.csprojResolveAssemblyReference.cache

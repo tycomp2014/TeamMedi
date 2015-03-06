@@ -18,10 +18,11 @@ namespace MvcWebAPI.Models
         {
             this.MedicationHistories = new HashSet<MedicationHistory>();
             this.Medications = new HashSet<Medication>();
+            this.PatientCalls = new HashSet<PatientCall>();
         }
     
         public int PatientID { get; set; }
-        public int MedicationID { get; set; }
+        public Nullable<int> MedicationID { get; set; }
         public int GPID { get; set; }
         public string Firstname { get; set; }
         public string Surname { get; set; }
@@ -29,14 +30,12 @@ namespace MvcWebAPI.Models
         public string Address2 { get; set; }
         public string Address3 { get; set; }
         public System.DateTime DOB { get; set; }
-        public string Medication { get; set; }
-        public string MedicationInfo { get; set; }
         public Nullable<double> lat { get; set; }
         public Nullable<double> lon { get; set; }
     
         public virtual GP GP { get; set; }
         public virtual ICollection<MedicationHistory> MedicationHistories { get; set; }
-        public virtual PatientCall PatientCall { get; set; }
         public virtual ICollection<Medication> Medications { get; set; }
+        public virtual ICollection<PatientCall> PatientCalls { get; set; }
     }
 }

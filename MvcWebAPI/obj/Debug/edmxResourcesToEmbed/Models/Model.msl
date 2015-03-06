@@ -32,8 +32,6 @@
     <EntitySetMapping Name="Hospitals">
       <EntityTypeMapping TypeName="mydbModel.Hospital">
         <MappingFragment StoreEntitySet="Hospital">
-          <ScalarProperty Name="lon" ColumnName="lon" />
-          <ScalarProperty Name="lat" ColumnName="lat" />
           <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
           <ScalarProperty Name="GPID" ColumnName="GPID" />
           <ScalarProperty Name="CallCentreID" ColumnName="CallCentreID" />
@@ -42,12 +40,15 @@
           <ScalarProperty Name="City" ColumnName="City" />
           <ScalarProperty Name="Conty" ColumnName="Conty" />
           <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
+          <ScalarProperty Name="lon" ColumnName="lon" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Medications">
       <EntityTypeMapping TypeName="mydbModel.Medication">
         <MappingFragment StoreEntitySet="Medication">
+          <ScalarProperty Name="Details" ColumnName="Details" />
           <ScalarProperty Name="MedicationID" ColumnName="MedicationID" />
           <ScalarProperty Name="MedicationName" ColumnName="MedicationName" />
           <ScalarProperty Name="Grams" ColumnName="Grams" />
@@ -78,8 +79,6 @@
           <ScalarProperty Name="Address2" ColumnName="Address2" />
           <ScalarProperty Name="Address3" ColumnName="Address3" />
           <ScalarProperty Name="DOB" ColumnName="DOB" />
-          <ScalarProperty Name="Medication" ColumnName="Medication" />
-          <ScalarProperty Name="MedicationInfo" ColumnName="MedicationInfo" />
           <ScalarProperty Name="lat" ColumnName="lat" />
           <ScalarProperty Name="lon" ColumnName="lon" />
         </MappingFragment>
@@ -92,13 +91,13 @@
           <ScalarProperty Name="PatientID" ColumnName="PatientID" />
           <ScalarProperty Name="lat" ColumnName="lat" />
           <ScalarProperty Name="lon" ColumnName="lon" />
+          <ScalarProperty Name="Processed" ColumnName="Processed" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ViewPatients">
       <EntityTypeMapping TypeName="mydbModel.ViewPatient">
         <MappingFragment StoreEntitySet="ViewPatient">
-          <ScalarProperty Name="MedicationHistory" ColumnName="MedicationHistory" />
           <ScalarProperty Name="PatientID" ColumnName="PatientID" />
           <ScalarProperty Name="MedicationID" ColumnName="MedicationID" />
           <ScalarProperty Name="GPID" ColumnName="GPID" />
@@ -107,6 +106,7 @@
           <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="Medication" ColumnName="Medication" />
           <ScalarProperty Name="Alergies" ColumnName="Alergies" />
+          <ScalarProperty Name="MedicationHistory" ColumnName="MedicationHistory" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -118,7 +118,5 @@
         <ScalarProperty Name="PatientID" ColumnName="PatientID" />
       </EndProperty>
     </AssociationSetMapping>
-    <FunctionImportMapping FunctionImportName="calcDistance" FunctionName="mydbModel.Store.calcDistance" />
-    <FunctionImportMapping FunctionImportName="CallCentreProc" FunctionName="mydbModel.Store.CallCentreProc" />
   </EntityContainerMapping>
 </Mapping>

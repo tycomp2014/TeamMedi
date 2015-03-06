@@ -18,6 +18,7 @@ namespace MvcWebAPI.Models
         public Nullable<int> PatientID { get; set; }
         public Nullable<double> lat { get; set; }
         public Nullable<double> lon { get; set; }
+        public Nullable<bool> Processed { get; set; }
     
         public virtual Patient Patient { get; set; }
     }

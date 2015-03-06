@@ -56,7 +56,7 @@
             <End Role="GP" EntitySet="GP" />
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
-          <AssociationSet Name="FK_PatientCalls_Patient" Association="mydbModel.Store.FK_PatientCalls_Patient">
+          <AssociationSet Name="FK_PatientCalls_Patient1" Association="mydbModel.Store.FK_PatientCalls_Patient1">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="PatientCalls" EntitySet="PatientCalls" />
           </AssociationSet>
@@ -109,6 +109,7 @@
           <Property Name="MedicationName" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="Grams" Type="decimal" />
           <Property Name="ml" Type="decimal" />
+          <Property Name="Details" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="MedicationHistory">
           <Key>
@@ -125,7 +126,7 @@
             <PropertyRef Name="PatientID" />
           </Key>
           <Property Name="PatientID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="MedicationID" Type="int" Nullable="false" />
+          <Property Name="MedicationID" Type="int" />
           <Property Name="GPID" Type="int" Nullable="false" />
           <Property Name="Firstname" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="50" />
@@ -133,8 +134,6 @@
           <Property Name="Address2" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="Address3" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="DOB" Type="date" Nullable="false" />
-          <Property Name="Medication" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="MedicationInfo" Type="varchar(max)" Nullable="false" />
           <Property Name="lat" Type="float" />
           <Property Name="lon" Type="float" />
         </EntityType>
@@ -150,10 +149,11 @@
           <Key>
             <PropertyRef Name="PatientCallsID" />
           </Key>
-          <Property Name="PatientCallsID" Type="int" Nullable="false" />
+          <Property Name="PatientCallsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="PatientID" Type="int" />
           <Property Name="lat" Type="float" />
           <Property Name="lon" Type="float" />
+          <Property Name="Processed" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'mydb.dbo.ViewPatient' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -161,14 +161,14 @@
         <EntityType Name="ViewPatient">
           <Key>
             <PropertyRef Name="PatientID" />
-            <PropertyRef Name="MedicationID" />
-            <PropertyRef Name="GPID" />
             
             
             
             
             
-            <PropertyRef Name="MedicationHistory" />
+            
+            
+            
           </Key>
           <Property Name="PatientID" Type="int" Nullable="false" />
           <Property Name="MedicationID" Type="int" Nullable="false" />
@@ -264,31 +264,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PatientCalls_Patient">
-          <End Role="Patient" Type="mydbModel.Store.Patient" Multiplicity="1" />
-          <End Role="PatientCalls" Type="mydbModel.Store.PatientCalls" Multiplicity="0..1" />
+        <Association Name="FK_PatientCalls_Patient1">
+          <End Role="Patient" Type="mydbModel.Store.Patient" Multiplicity="0..1" />
+          <End Role="PatientCalls" Type="mydbModel.Store.PatientCalls" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
               <PropertyRef Name="PatientID" />
             </Principal>
             <Dependent Role="PatientCalls">
-              <PropertyRef Name="PatientCallsID" />
+              <PropertyRef Name="PatientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="calcDistance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="lat" Type="float" Mode="In" />
-          <Parameter Name="lon" Type="float" Mode="In" />
-          <Parameter Name="Kilometers" Type="float" Mode="In" />
-        </Function>
-        <Function Name="CallCentreProc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="E_PatientLat" Type="float" Mode="In" />
-          <Parameter Name="E_PatientLon" Type="float" Mode="In" />
-          <Parameter Name="E_AmbulanceLat" Type="float" Mode="In" />
-          <Parameter Name="E_AmbulanceLon" Type="float" Mode="In" />
-          <Parameter Name="E_AmbulanceID" Type="int" Mode="In" />
-          <Parameter Name="E_PatientID" Type="int" Mode="In" />
-        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -323,27 +310,14 @@
             <End Role="Patient" EntitySet="Patients" />
             <End Role="MedicationHistory" EntitySet="MedicationHistories" />
           </AssociationSet>
-          <AssociationSet Name="FK_PatientCalls_Patient" Association="mydbModel.FK_PatientCalls_Patient">
-            <End Role="Patient" EntitySet="Patients" />
-            <End Role="PatientCalls" EntitySet="PatientCalls" />
-          </AssociationSet>
           <AssociationSet Name="Patient_Medication" Association="mydbModel.Patient_Medication">
             <End Role="Medication" EntitySet="Medications" />
             <End Role="Patient" EntitySet="Patients" />
           </AssociationSet>
-          <FunctionImport Name="calcDistance">
-            <Parameter Name="lat" Mode="In" Type="Double" />
-            <Parameter Name="lon" Mode="In" Type="Double" />
-            <Parameter Name="Kilometers" Mode="In" Type="Double" />
-          </FunctionImport>
-          <FunctionImport Name="CallCentreProc">
-            <Parameter Name="E_PatientLat" Mode="In" Type="Double" />
-            <Parameter Name="E_PatientLon" Mode="In" Type="Double" />
-            <Parameter Name="E_AmbulanceLat" Mode="In" Type="Double" />
-            <Parameter Name="E_AmbulanceLon" Mode="In" Type="Double" />
-            <Parameter Name="E_AmbulanceID" Mode="In" Type="Int32" />
-            <Parameter Name="E_PatientID" Mode="In" Type="Int32" />
-          </FunctionImport>
+          <AssociationSet Name="FK_PatientCalls_Patient1" Association="mydbModel.FK_PatientCalls_Patient1">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="PatientCall" EntitySet="PatientCalls" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Ambulance">
           <Key>
@@ -387,10 +361,10 @@
           <Property Name="City" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Conty" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Country" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="lat" Type="Double" Nullable="false" />
+          <Property Name="lon" Type="Double" Nullable="false" />
           <NavigationProperty Name="CallCentre" Relationship="mydbModel.FK_Hospital_CallCentre" FromRole="Hospital" ToRole="CallCentre" />
           <NavigationProperty Name="GP" Relationship="mydbModel.FK_Hospital_GP" FromRole="Hospital" ToRole="GP" />
-          <Property Type="Double" Name="lat" Nullable="false" />
-          <Property Type="Double" Name="lon" Nullable="false" />
         </EntityType>
         <EntityType Name="Medication">
           <Key>
@@ -401,6 +375,7 @@
           <Property Name="Grams" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ml" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Patients" Relationship="mydbModel.Patient_Medication" FromRole="Medication" ToRole="Patient" />
+          <Property Type="String" Name="Details" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MedicationHistory">
           <Key>
@@ -417,8 +392,8 @@
           <Key>
             <PropertyRef Name="PatientID" />
           </Key>
-          <Property Name="PatientID" Type="Int32" Nullable="false" />
-          <Property Name="MedicationID" Type="Int32" Nullable="false" />
+          <Property Name="PatientID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicationID" Type="Int32" />
           <Property Name="GPID" Type="Int32" Nullable="false" />
           <Property Name="Firstname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -426,31 +401,27 @@
           <Property Name="Address2" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Address3" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Medication" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="MedicationInfo" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="lat" Type="Double" />
           <Property Name="lon" Type="Double" />
           <NavigationProperty Name="GP" Relationship="mydbModel.FK_Patient_GP" FromRole="Patient" ToRole="GP" />
           <NavigationProperty Name="MedicationHistories" Relationship="mydbModel.FK_MedicationHistory_Patient" FromRole="Patient" ToRole="MedicationHistory" />
-          <NavigationProperty Name="PatientCall" Relationship="mydbModel.FK_PatientCalls_Patient" FromRole="Patient" ToRole="PatientCalls" />
           <NavigationProperty Name="Medications" Relationship="mydbModel.Patient_Medication" FromRole="Patient" ToRole="Medication" />
+          <NavigationProperty Name="PatientCalls" Relationship="mydbModel.FK_PatientCalls_Patient1" FromRole="Patient" ToRole="PatientCall" />
         </EntityType>
         <EntityType Name="PatientCall">
           <Key>
             <PropertyRef Name="PatientCallsID" />
           </Key>
-          <Property Name="PatientCallsID" Type="Int32" Nullable="false" />
+          <Property Name="PatientCallsID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="PatientID" Type="Int32" />
           <Property Name="lat" Type="Double" />
           <Property Name="lon" Type="Double" />
-          <NavigationProperty Name="Patient" Relationship="mydbModel.FK_PatientCalls_Patient" FromRole="PatientCalls" ToRole="Patient" />
+          <Property Name="Processed" Type="Boolean" />
+          <NavigationProperty Name="Patient" Relationship="mydbModel.FK_PatientCalls_Patient1" FromRole="PatientCall" ToRole="Patient" />
         </EntityType>
         <EntityType Name="ViewPatient">
           <Key>
             <PropertyRef Name="PatientID" />
-            <PropertyRef Name="MedicationID" />
-            <PropertyRef Name="GPID" />
-            <PropertyRef Name="MedicationHistory" />
           </Key>
           <Property Name="PatientID" Type="Int32" Nullable="false" />
           <Property Name="MedicationID" Type="Int32" Nullable="false" />
@@ -460,7 +431,7 @@
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Medication" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Alergies" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Type="String" Name="MedicationHistory" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MedicationHistory" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
         </EntityType>
         <Association Name="FK_Ambulance_CallCentre">
           <End Role="CallCentre" Type="mydbModel.CallCentre" Multiplicity="1" />
@@ -522,21 +493,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PatientCalls_Patient">
-          <End Role="Patient" Type="mydbModel.Patient" Multiplicity="1" />
-          <End Role="PatientCalls" Type="mydbModel.PatientCall" Multiplicity="0..1" />
+        <Association Name="Patient_Medication">
+          <End Role="Medication" Type="mydbModel.Medication" Multiplicity="*" />
+          <End Role="Patient" Type="mydbModel.Patient" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_PatientCalls_Patient1">
+          <End Type="mydbModel.Patient" Role="Patient" Multiplicity="0..1" />
+          <End Type="mydbModel.PatientCall" Role="PatientCall" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
               <PropertyRef Name="PatientID" />
             </Principal>
-            <Dependent Role="PatientCalls">
-              <PropertyRef Name="PatientCallsID" />
+            <Dependent Role="PatientCall">
+              <PropertyRef Name="PatientID" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="Patient_Medication">
-          <End Role="Medication" Type="mydbModel.Medication" Multiplicity="*" />
-          <End Role="Patient" Type="mydbModel.Patient" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -575,8 +546,6 @@
           <EntitySetMapping Name="Hospitals">
             <EntityTypeMapping TypeName="mydbModel.Hospital">
               <MappingFragment StoreEntitySet="Hospital">
-                <ScalarProperty Name="lon" ColumnName="lon" />
-                <ScalarProperty Name="lat" ColumnName="lat" />
                 <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
                 <ScalarProperty Name="GPID" ColumnName="GPID" />
                 <ScalarProperty Name="CallCentreID" ColumnName="CallCentreID" />
@@ -585,12 +554,15 @@
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Conty" ColumnName="Conty" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="lon" ColumnName="lon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Medications">
             <EntityTypeMapping TypeName="mydbModel.Medication">
               <MappingFragment StoreEntitySet="Medication">
+                <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="MedicationID" ColumnName="MedicationID" />
                 <ScalarProperty Name="MedicationName" ColumnName="MedicationName" />
                 <ScalarProperty Name="Grams" ColumnName="Grams" />
@@ -621,8 +593,6 @@
                 <ScalarProperty Name="Address2" ColumnName="Address2" />
                 <ScalarProperty Name="Address3" ColumnName="Address3" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="Medication" ColumnName="Medication" />
-                <ScalarProperty Name="MedicationInfo" ColumnName="MedicationInfo" />
                 <ScalarProperty Name="lat" ColumnName="lat" />
                 <ScalarProperty Name="lon" ColumnName="lon" />
               </MappingFragment>
@@ -635,13 +605,13 @@
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
                 <ScalarProperty Name="lat" ColumnName="lat" />
                 <ScalarProperty Name="lon" ColumnName="lon" />
+                <ScalarProperty Name="Processed" ColumnName="Processed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ViewPatients">
             <EntityTypeMapping TypeName="mydbModel.ViewPatient">
               <MappingFragment StoreEntitySet="ViewPatient">
-                <ScalarProperty Name="MedicationHistory" ColumnName="MedicationHistory" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
                 <ScalarProperty Name="MedicationID" ColumnName="MedicationID" />
                 <ScalarProperty Name="GPID" ColumnName="GPID" />
@@ -650,6 +620,7 @@
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="Medication" ColumnName="Medication" />
                 <ScalarProperty Name="Alergies" ColumnName="Alergies" />
+                <ScalarProperty Name="MedicationHistory" ColumnName="MedicationHistory" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -661,8 +632,6 @@
               <ScalarProperty Name="PatientID" ColumnName="PatientID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="calcDistance" FunctionName="mydbModel.Store.calcDistance" />
-          <FunctionImportMapping FunctionImportName="CallCentreProc" FunctionName="mydbModel.Store.CallCentreProc" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvcWebAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,11 +9,15 @@ namespace MvcWebAPI.Controllers
 {
     public class CallCentreController : Controller
     {
+
         //
         // GET: /CallCentre/
 
         public ActionResult Index()
         {
+            var mydbEntities = new mydbEntities();
+            var patient = from p in mydbEntities.Patients
+                          select p;
             return View();
         }
 

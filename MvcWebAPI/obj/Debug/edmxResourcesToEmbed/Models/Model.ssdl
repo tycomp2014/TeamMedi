@@ -51,7 +51,7 @@
       <End Role="GP" EntitySet="GP" />
       <End Role="Patient" EntitySet="Patient" />
     </AssociationSet>
-    <AssociationSet Name="FK_PatientCalls_Patient" Association="mydbModel.Store.FK_PatientCalls_Patient">
+    <AssociationSet Name="FK_PatientCalls_Patient1" Association="mydbModel.Store.FK_PatientCalls_Patient1">
       <End Role="Patient" EntitySet="Patient" />
       <End Role="PatientCalls" EntitySet="PatientCalls" />
     </AssociationSet>
@@ -104,6 +104,7 @@
     <Property Name="MedicationName" Type="varchar" Nullable="false" MaxLength="20" />
     <Property Name="Grams" Type="decimal" />
     <Property Name="ml" Type="decimal" />
+    <Property Name="Details" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="MedicationHistory">
     <Key>
@@ -120,7 +121,7 @@
       <PropertyRef Name="PatientID" />
     </Key>
     <Property Name="PatientID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="MedicationID" Type="int" Nullable="false" />
+    <Property Name="MedicationID" Type="int" />
     <Property Name="GPID" Type="int" Nullable="false" />
     <Property Name="Firstname" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="50" />
@@ -128,8 +129,6 @@
     <Property Name="Address2" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="Address3" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="DOB" Type="date" Nullable="false" />
-    <Property Name="Medication" Type="varchar" Nullable="false" MaxLength="20" />
-    <Property Name="MedicationInfo" Type="varchar(max)" Nullable="false" />
     <Property Name="lat" Type="float" />
     <Property Name="lon" Type="float" />
   </EntityType>
@@ -145,10 +144,11 @@
     <Key>
       <PropertyRef Name="PatientCallsID" />
     </Key>
-    <Property Name="PatientCallsID" Type="int" Nullable="false" />
+    <Property Name="PatientCallsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="PatientID" Type="int" />
     <Property Name="lat" Type="float" />
     <Property Name="lon" Type="float" />
+    <Property Name="Processed" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
       warning 6002: The table/view 'mydb.dbo.ViewPatient' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -156,9 +156,6 @@
   <EntityType Name="ViewPatient">
     <Key>
       <PropertyRef Name="PatientID" />
-      <PropertyRef Name="MedicationID" />
-      <PropertyRef Name="GPID" />
-      <PropertyRef Name="MedicationHistory" />
     </Key>
     <Property Name="PatientID" Type="int" Nullable="false" />
     <Property Name="MedicationID" Type="int" Nullable="false" />
@@ -254,29 +251,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PatientCalls_Patient">
-    <End Role="Patient" Type="mydbModel.Store.Patient" Multiplicity="1" />
-    <End Role="PatientCalls" Type="mydbModel.Store.PatientCalls" Multiplicity="0..1" />
+  <Association Name="FK_PatientCalls_Patient1">
+    <End Role="Patient" Type="mydbModel.Store.Patient" Multiplicity="0..1" />
+    <End Role="PatientCalls" Type="mydbModel.Store.PatientCalls" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Patient">
         <PropertyRef Name="PatientID" />
       </Principal>
       <Dependent Role="PatientCalls">
-        <PropertyRef Name="PatientCallsID" />
+        <PropertyRef Name="PatientID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="calcDistance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="lat" Type="float" Mode="In" />
-    <Parameter Name="lon" Type="float" Mode="In" />
-    <Parameter Name="Kilometers" Type="float" Mode="In" />
-  </Function>
-  <Function Name="CallCentreProc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="E_PatientLat" Type="float" Mode="In" />
-    <Parameter Name="E_PatientLon" Type="float" Mode="In" />
-    <Parameter Name="E_AmbulanceLat" Type="float" Mode="In" />
-    <Parameter Name="E_AmbulanceLon" Type="float" Mode="In" />
-    <Parameter Name="E_AmbulanceID" Type="int" Mode="In" />
-    <Parameter Name="E_PatientID" Type="int" Mode="In" />
-  </Function>
 </Schema>

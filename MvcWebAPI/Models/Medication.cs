@@ -23,6 +23,7 @@ namespace MvcWebAPI.Models
         public string MedicationName { get; set; }
         public Nullable<decimal> Grams { get; set; }
         public Nullable<decimal> ml { get; set; }
+        public string Details { get; set; }
     
         public virtual ICollection<Patient> Patients { get; set; }
     }

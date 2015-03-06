@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvcWebAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +11,10 @@ namespace MvcWebAPI.Controllers
     {
         public ActionResult Index()
         {
-
-            return View();
+            
+            return View ();
+           
+    
         }
     }
 }
